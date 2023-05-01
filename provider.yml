@@ -1,0 +1,7 @@
+name: aws
+stage: ${opt:stage, 'development'}
+region: ${env:REGION}
+profile: ${env:PROFILE}
+runtime: nodejs16.x
+memorySize: 128
+timeout: 30

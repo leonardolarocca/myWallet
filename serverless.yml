@@ -1,0 +1,18 @@
+service: myWallet
+
+frameworkVersion: '3'
+
+useDotenv: true
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-esbuild
+  - serverless-offline
+  - serverless-dynamodb-local
+
+provider: ${file(provider.yml)}
+
+functions: ${file(functions.yml)}
+
+package:
+  excludeDevDependencies: true

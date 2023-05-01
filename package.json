@@ -1,11 +1,13 @@
 {
-  "name": "myWallet",
+  "name": "my-wallet",
+  "author": "Leonardo Larocca",
+  "description": "Serverless myWallet project",
+  "main": "src/index.ts",
+  "license": "MIT",
   "version": "1.0.0",
-  "description": "Serverless aws-nodejs-typescript template",
-  "main": "serverless.ts",
   "scripts": {},
   "engines": {
-    "node": ">=14.15.0"
+    "node": ">=16.17.1"
   },
   "dependencies": {
     "@middy/core": "^3.4.0",
@@ -31,13 +33,14 @@
     "json-schema-to-ts": "^1.5.0",
     "lint-staged": "^13.2.2",
     "serverless": "^3.0.0",
-    "serverless-esbuild": "^1.23.3",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-dynamodb-local": "^0.2.40",
+    "serverless-esbuild": "^1.43.1",
+    "serverless-offline": "^12.0.4",
     "tsconfig-paths": "^3.9.0",
     "tsx": "^3.12.6",
     "typescript": "^5.0.4"
   },
-  "author": "The serverless webpack authors (https://github.com/elastic-coders/serverless-webpack)",
-  "license": "MIT",
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"

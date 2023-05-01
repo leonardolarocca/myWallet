@@ -1,0 +1,71 @@
+createUser:
+  handler: src/index.createUser
+  description: Create a new user
+  events:
+    - httpApi:
+        method: POST
+        path: /user
+getUserInfo:
+  handler: src/index.getUserInfo
+  description: Get user info
+  events:
+    - httpApi:
+        method: GET
+        path: /user/:userId
+createWallet:
+  handler: src/index.createWallet
+  description: Create new wallet for user
+  events:
+    - httpApi:
+        method: POST
+        path: /:userId/wallet
+getWalletInfo:
+  handler: src/index.getWalletInfo
+  description: Get wallet info
+  events:
+    - httpApi:
+        method: GET
+        path: /user/:userId/wallet
+configureWalletLimits:
+  handler: src/index.configureWalletLimits
+  description: Configure limit value for wallet
+  events:
+    - httpApi:
+        method: POST
+        path: /:userId/wallet/limits
+buy:
+  handler: src/index.buy
+  description: Make a purchase
+  events:
+    - httpApi:
+        method: POST
+        path: /:userId/wallet/buy
+addCard:
+  handler: src/index.addCard
+  description: Add one card on wallet
+  events:
+    - httpApi:
+        method: post
+        path: /:userId/wallet/cards
+getCardInfo:
+  handler: src/index.getCardInfo
+  description: Get details from card
+  events:
+    - httpApi:
+        method: GET
+        path: /:userId/wallet/cards
+removeCard:
+  handler: src/index.removeCard
+  description: Remove one card from wallet
+  events:
+    - httpApi:
+        method: DELETE
+        path: /:userId/wallet/cards/:cardNumber
+pay:
+  handler: src/index.pay
+  description: Pay bills from card
+  events:
+    - httpApi:
+        method: POST
+        path: /:userId/wallet/cards/:cardNumber
+
