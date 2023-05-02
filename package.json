@@ -5,13 +5,20 @@
   "main": "src/index.ts",
   "license": "MIT",
   "version": "1.0.0",
-  "scripts": {},
+  "scripts": {
+    "start-local": "sls offline start --reloadHandler --stage dev"
+  },
   "engines": {
     "node": ">=16.17.1"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.321.1",
+    "@aws-sdk/lib-dynamodb": "^3.321.1",
     "@middy/core": "^3.4.0",
-    "@middy/http-json-body-parser": "^3.4.0"
+    "@middy/http-error-handler": "^4.4.0",
+    "@middy/http-json-body-parser": "^3.4.0",
+    "uuid": "^9.0.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.1",
@@ -19,6 +26,7 @@
     "@serverless/typescript": "^3.0.0",
     "@types/aws-lambda": "^8.10.71",
     "@types/node": "^14.14.25",
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.59.1",
     "cz-conventional-changelog": "^3.3.0",
     "esbuild": "^0.14.11",

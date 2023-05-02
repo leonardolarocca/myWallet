@@ -1,0 +1,10 @@
+dynamodb:
+  stages:
+    - dev
+  start:
+    port: 8000
+    inMemory: true
+    migrate: true
+    seed: true
+  migration:
+    dir: offline/migrations
