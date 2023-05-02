@@ -1,7 +1,20 @@
 name: aws
-stage: ${opt:stage, 'development'}
+stage: ${opt:stage, 'dev'}
 region: ${env:REGION}
 profile: ${env:PROFILE}
 runtime: nodejs16.x
 memorySize: 128
 timeout: 30
+httpApi:
+  cors: true
+iam:
+  role:
+    statements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+          - dynamodb:Scan
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+        Resource: "arn:aws:dynamodb:${aws:region}:*:table/${env:DYNAMODB_TABLE_PREFIX}*"

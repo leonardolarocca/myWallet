@@ -44,6 +44,9 @@
         "args": "after-used",
         "argsIgnorePattern": "^_"
       }
-    ]
+    ],
+    "no-return-await": 1,
+    "@typescript-eslint/return-await": "off",
+    "@typescript-eslint/restrict-template-expressions": "off"
   }
 }
