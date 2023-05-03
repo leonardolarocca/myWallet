@@ -24,7 +24,7 @@ export const createWallet = async (event: IApiGatewayProxyEvent): Promise<Wallet
     maxValue: 0,
     cards: []
   })
-  return wallet.createWallet()
+  return wallet.save()
 }
 
 export const configureWalletLimits = async (event: IApiGatewayProxyEvent): Promise<any> => {

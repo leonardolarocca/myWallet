@@ -1,9 +1,11 @@
+import { addCard, pay, removeCard } from '@functions/cardFunctions'
 import { createUser, getUserInfo } from '@functions/userFunctions'
 import { configureWalletLimits, createWallet, getAllWalletsFromUser, getWalletInfo } from '@functions/walletFunctions'
 import schemaValidatorMiddleware from '@middlewares/schemaValidatorMiddleware'
 import handler from '@middy/core'
 import httpErrorHandler from '@middy/http-error-handler'
 import httpJsonBodyParser from '@middy/http-json-body-parser'
+import { cardSchema } from '@schemas/cardSchema'
 import { userSchema } from '@schemas/userSchema'
 import { limitsSchema } from '@schemas/walletSchema'
 
@@ -33,4 +35,17 @@ export const getWalletInfoHandler = handler(getWalletInfo)
 export const configureWalletLimitsHandler = handler(configureWalletLimits)
   .use(httpJsonBodyParser())
   .use(schemaValidatorMiddleware(limitsSchema))
+  .use(errorHandler)
+
+export const addCardHandler = handler(addCard)
+  .use(httpJsonBodyParser())
+  .use(schemaValidatorMiddleware(cardSchema))
+  .use(errorHandler)
+
+export const removeCardHandler = handler(removeCard)
+  .use(httpJsonBodyParser())
+  .use(errorHandler)
+
+export const payHandler = handler(pay)
+  .use(httpJsonBodyParser())
   .use(errorHandler)

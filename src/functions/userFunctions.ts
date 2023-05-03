@@ -9,5 +9,5 @@ export const getUserInfo = async (event: IApiGatewayProxyEvent): Promise<User> =
 
 export const createUser = async (event: IApiGatewayProxyEvent): Promise<User> => {
   const user = new UserModel({ id: v4(), wallets: [], ...event.body })
-  return user.createUser()
+  return user.save()
 }

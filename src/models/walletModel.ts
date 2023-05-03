@@ -10,7 +10,7 @@ class WalletModel {
     this.wallet = wallet
   }
 
-  public async createWallet (): Promise<Wallet> {
+  public async save (): Promise<Wallet> {
     return dynamoClient.send(new PutCommand({
       TableName: `${process.env.DYNAMODB_TABLE_PREFIX}-wallets`,
       Item: this.wallet
@@ -41,11 +41,7 @@ class WalletModel {
       IndexName: 'userId-index',
       KeyConditionExpression: 'userId = :userId',
       ExpressionAttributeValues: { ':userId': userId }
-    })).then(({ Items }) => Items as Wallet[])
-
-    if (!wallets.length) {
-      throw new NotFoundException('Wallets not found')
-    }
+    })).then(({ Items }) => Items as Wallet[] ?? [])
 
     return wallets
   }
