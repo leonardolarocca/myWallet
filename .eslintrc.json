@@ -47,6 +47,7 @@
     ],
     "no-return-await": 1,
     "@typescript-eslint/return-await": "off",
-    "@typescript-eslint/restrict-template-expressions": "off"
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off"
   }
 }
