@@ -8,8 +8,11 @@ export const cardSchema = z.object({
   expirationYear: z.number().min(new Date().getFullYear()).max(new Date().getFullYear() + 10),
   cvv: z.string().regex(/\d{3}/g, { message: 'Should be 3 digit string' }),
   limit: z.number().min(0).transform(value => Number((value).toFixed(2))),
-  avaliableLimit: z.number().min(0).transform(value => Number((value).toFixed(2))).optional(),
-  purchases: z.array(z.number()).optional()
+  avaliableLimit: z.number().min(0).default(0).transform(value => Number((value).toFixed(2))).optional(),
+  purchases: z.array(z.number()).default([]).optional(),
+  totalAmount: z.number().min(0).optional()
 })
+
+export const paySchema = z.object({ amount: z.number().min(0.01) })
 
 export type Card = z.infer<typeof cardSchema>
