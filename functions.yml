@@ -6,7 +6,7 @@ createUser:
         method: POST
         path: /user
 getUserInfo:
-  handler: src/index.getUserInfoHandler
+  handler: src/index.getUserHandler
   description: Get user info
   events:
     - httpApi:
@@ -27,21 +27,21 @@ getAllWalletsFromUser:
         method: GET
         path: /user/{userId}/wallet
 getWalletInfo:
-  handler: src/index.getWalletInfoHandler
+  handler: src/index.getWalletByIdAndUserIdHandler
   description: Get wallet info
   events:
     - httpApi:
         method: GET
         path: /user/{userId}/wallet/{walletId}
 configureWalletLimits:
-  handler: src/index.configureWalletLimitsHandler
+  handler: src/index.setWalletLimitHandler
   description: Configure limit value for wallet
   events:
     - httpApi:
         method: POST
         path: /user/{userId}/wallet/{walletId}/limit
 buy:
-  handler: src/index.buyHandler
+  handler: src/index.purchaseHandler
   description: Make a purchase
   events:
     - httpApi:
@@ -55,14 +55,14 @@ addCard:
         method: POST
         path: /user/{userId}/wallet/{walletId}/card
 getCards:
-  handler: src/index.getCardsFromWalletHandler
+  handler: src/index.getCardsHandler
   description: Get all cards from wallet
   events:
     - httpApi:
         method: GET
         path: /user/{userId}/wallet/{walletId}/card
 getCard:
-  handler: src/index.getCardFromWalletHandler
+  handler: src/index.getCardHandler
   description: Get one card from wallet
   events:
     - httpApi:
@@ -75,8 +75,8 @@ removeCard:
     - httpApi:
         method: DELETE
         path: /user/{userId}/wallet/{walletId}/card/{cardNumber}
-pay:
-  handler: src/index.payHandler
+payDebit:
+  handler: src/index.payCardDebitsHandler
   description: Pay a value in one card
   events:
     - httpApi:

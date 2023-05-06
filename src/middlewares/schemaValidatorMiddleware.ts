@@ -9,7 +9,7 @@ export default (schema: z.ZodObject<Record<string, any>>): MiddlewareObj<APIGate
     try {
       request.event.body = schema.parse(request.event.body)
     } catch (err: any) {
-      throw new UnprocessableException(new z.ZodError(err).message)
+      throw new UnprocessableException(JSON.parse(new z.ZodError(err).message))
     }
   }
   return {

@@ -11,11 +11,3 @@ export const walletSchema = z.object({
 })
 
 export type Wallet = z.infer<typeof walletSchema>
-
-export const limitsSchema = z.object({
-  limitAmount: z.number().min(0).transform(value => Number((value).toFixed(2)))
-})
-
-export const buySchema = z.object({
-  amount: z.number().min(0.01)
-})

@@ -13,6 +13,4 @@ export const cardSchema = z.object({
   totalAmount: z.number().min(0).optional()
 })
 
-export const paySchema = z.object({ amount: z.number().min(0.01) })
-
 export type Card = z.infer<typeof cardSchema>

@@ -1,11 +1,11 @@
-import CardModel from '@models/cardModel'
+import CardRepository from '@repositories/cardRepository'
 import { type Card } from '@schemas/cardSchema'
 
 export const getSortedCards = async (cardIds: string[]): Promise<Card[]> => {
   const cards = []
 
   for await (const card of cardIds) {
-    cards.push(await CardModel.getById(card))
+    cards.push(await new CardRepository().getOne(card))
   }
 
   sortCards(cards)
@@ -44,7 +44,7 @@ export const getAvaliableLimit = (card: Card): number => {
 export const getTotalPurchases = async (cards: string[]): Promise<number | undefined> => {
   return Promise.all(
     cards.map(async cardNumber => (
-      CardModel.getById(cardNumber).then(card => card.purchases?.reduce((sum, currentValue) => sum + currentValue, 0))
+      new CardRepository().getOne(cardNumber).then(card => card.purchases?.reduce((sum, currentValue) => sum + currentValue, 0))
     ))
   ).then(card => card.reduce((sum, currentValue) => sum + currentValue, 0))
 }

@@ -15,7 +15,7 @@
     "@aws-sdk/client-dynamodb": "^3.321.1",
     "@aws-sdk/lib-dynamodb": "^3.321.1",
     "@middy/core": "^3.4.0",
-    "@middy/http-error-handler": "^4.4.0",
+    "@middy/http-event-normalizer": "^4.4.0",
     "@middy/http-json-body-parser": "^3.4.0",
     "uuid": "^9.0.0",
     "zod": "^3.21.4"
