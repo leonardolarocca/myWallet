@@ -80,8 +80,15 @@ export const addCard = async (event: AddCard): Promise<Card> => {
 }
 
 export const removeCard = async (event: RemoveCard): Promise<APIGatewayProxyResult> => {
+  const newMaxLimitClient = event.wallet.maxLimit - event.card.limit
+  event.wallet.clientLimit = Math.min(newMaxLimitClient, event.wallet.clientLimit ?? 0)
+
   event.wallet.maxLimit -= event.card.limit
   event.wallet.avaliableAmount -= event.card.limit
+
+  if (!event.wallet.clientLimit) {
+    delete event.wallet.clientLimit
+  }
 
   return new CardRepository().delete(event.pathParameters.cardNumber).then(async () => {
     await new WalletRepository().save(event.wallet)

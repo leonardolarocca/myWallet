@@ -1,4 +1,6 @@
-import UnauthorizedException from '@exceptions/unauthorizedException'
+import ForbiddenException from '@exceptions/forbiddenException'
+import InternalException from '@exceptions/internalException'
+import NotFoundException from '@exceptions/notFoundException'
 import type middy from '@middy/core'
 import { type MiddlewareObj } from '@middy/core'
 import WalletRepository from '@repositories/walletRepository'
@@ -18,7 +20,7 @@ export default (): MiddlewareObj<APIGatewayProxyEvent, APIGatewayProxyResult> =>
       )
 
       if (!wallet.cards?.length) {
-        throw ('Cards not found')
+        throw new NotFoundException('Cards not found')
       }
 
       const totalPurchases = await getTotalPurchases(wallet.cards) ?? 0
@@ -26,13 +28,13 @@ export default (): MiddlewareObj<APIGatewayProxyEvent, APIGatewayProxyResult> =>
       const avaliableLimit = limit - totalPurchases
 
       if (amount > avaliableLimit) {
-        throw ('You dont have enought limit avaliable to perform this request')
+        throw new ForbiddenException('You dont have enought limit avaliable to perform this request')
       }
 
       request.event.wallet = wallet
       request.event.totalPurchases = totalPurchases
     } catch (err: any) {
-      throw new UnauthorizedException(err)
+      throw new InternalException(err)
     }
   }
   return {

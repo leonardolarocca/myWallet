@@ -1,5 +1,6 @@
+import InternalException from '@exceptions/internalException'
 import NotFoundException from '@exceptions/notFoundException'
-import UnauthorizedException from '@exceptions/unauthorizedException'
+import PaymentRequiredException from '@exceptions/paymentRequiredException'
 import type middy from '@middy/core'
 import { type MiddlewareObj } from '@middy/core'
 import CardRepository from '@repositories/cardRepository'
@@ -29,13 +30,13 @@ export default (): MiddlewareObj<APIGatewayProxyEvent, APIGatewayProxyResult> =>
       }
 
       if (card.purchases?.length) {
-        throw new UnauthorizedException(`pay your bills before remove card: ${card.number}`)
+        throw new PaymentRequiredException(`Pay your bills before remove card: ${card.number}`)
       }
 
       event.wallet = wallet
       event.card = card
     } catch (err: any) {
-      throw new UnauthorizedException(err)
+      throw new InternalException(err)
     }
   }
   return {

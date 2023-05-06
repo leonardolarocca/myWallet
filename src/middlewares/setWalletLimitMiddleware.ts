@@ -1,5 +1,7 @@
+import ForbiddenException from '@exceptions/forbiddenException'
+import InternalException from '@exceptions/internalException'
 import NotFoundException from '@exceptions/notFoundException'
-import UnauthorizedException from '@exceptions/unauthorizedException'
+import UnprocessableException from '@exceptions/unprocessableEntityException'
 import type middy from '@middy/core'
 import { type MiddlewareObj } from '@middy/core'
 import WalletRepository from '@repositories/walletRepository'
@@ -21,24 +23,24 @@ export default (): MiddlewareObj<APIGatewayProxyEvent, APIGatewayProxyResult> =>
       }
 
       if (!wallet.cards?.length) {
-        throw new NotFoundException('You need at least one card on wallet to set limit')
+        throw new UnprocessableException('You need at least one card on wallet to set limit')
       }
 
       const { limitAmount } = event.body
 
       if (limitAmount > wallet.maxLimit) {
-        throw new UnauthorizedException('Limit amount exceds the wallet max value')
+        throw new ForbiddenException('Limit amount exceds the wallet max value')
       }
 
       const usedLimit = await getTotalPurchases(wallet.cards) ?? 0
 
       if (limitAmount < usedLimit) {
-        throw new UnauthorizedException(`limit min should be greater or equal to ${usedLimit}`)
+        throw new ForbiddenException(`limit min should be greater or equal to ${usedLimit}`)
       }
 
       request.event.wallet = wallet
     } catch (err: any) {
-      throw new UnauthorizedException(err)
+      throw new InternalException(err)
     }
   }
   return {
