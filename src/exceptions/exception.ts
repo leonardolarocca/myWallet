@@ -4,7 +4,7 @@ class Exception extends Error {
   protected statusCode: number
   protected body: IErrorResponse
 
-  public constructor (status: number, code: string, message: string, errorCode?: number) {
+  public constructor (status: number, code: string, message: any, errorCode?: number) {
     super(message)
     this.body = {
       code,
