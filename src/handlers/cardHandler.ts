@@ -13,8 +13,13 @@ export const getCards = async (event: GetCard): Promise<Card[]> => {
     event.pathParameters.userId
   )
 
+  console.log('wallet', wallet)
+
+  // TODO: colocar validacao caso nao encontre a carteira
+
   if (!wallet.cards?.length) {
-    throw new NotFoundException(`Cards not found for this wallet: ${wallet.id}`)
+    throw Error(`Cards not found for this wallet: ${wallet.id}`)
+    // throw new NotFoundException(`Cards not found for this wallet: ${wallet.id}`)
   }
 
   return Promise.all(
@@ -27,6 +32,8 @@ export const getCard = async (event: GetCard): Promise<Card> => {
     event.pathParameters.walletId,
     event.pathParameters.userId
   )
+
+  // TODO: colocar validacao caso nao encontre a carteira
 
   if (!wallet.cards?.length) {
     throw new NotFoundException(`Cards not found for this wallet: ${wallet.id}`)
@@ -63,6 +70,8 @@ export const addCard = async (event: AddCard): Promise<Card> => {
     purchases: [],
     totalAmount: 0
   }
+
+  // TODO: validar se o cartao ja foi cadastrado em outra carteira
 
   if (wallet.cards?.includes(card.number)) {
     throw new ConflictException('Card already exists on wallet')

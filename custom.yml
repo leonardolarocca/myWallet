@@ -8,3 +8,12 @@ dynamodb:
     seed: true
   migration:
     dir: offline/migrations
+  seed:
+    test:
+      sources:
+        - table: ${env:DYNAMODB_TABLE_PREFIX}-users
+          sources: [./tests/seeds/users.json]
+        - table: ${env:DYNAMODB_TABLE_PREFIX}-wallets
+          sources: [./tests/seeds/wallets.json]
+        - table: ${env:DYNAMODB_TABLE_PREFIX}-cards
+          sources: [./tests/seeds/cards.json]
