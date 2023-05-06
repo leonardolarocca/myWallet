@@ -1,8 +1,8 @@
 interface IApiGatewayProxyEvent {
-  body: Record<string, any> | undefined
-  headers: Record<string, string> | undefined
-  pathParameters: Record<string, string> | undefined
-  queryStringParameters: Record<string, string> | undefined
+  body: any
+  headers: Record<string, string>
+  pathParameters: Record<string, string>
+  queryStringParameters: Record<string, string>
 }
 
 export default IApiGatewayProxyEvent

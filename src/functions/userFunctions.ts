@@ -1,36 +1,13 @@
-import NotFoundException from '@exceptions/notFoundException'
 import type IApiGatewayProxyEvent from '@interfaces/IApiGatewayProxyEvent'
-import UserModel from 'src/models/userModel'
+import UserModel from '@models/userModel'
+import { type User } from '@schemas/userSchema'
 import { v4 } from 'uuid'
 
-class UserFunctions {
-  private readonly userModel: UserModel
-
-  public constructor () {
-    this.userModel = new UserModel()
-    this.getUserInfo = this.getUserInfo.bind(this)
-    this.createUser = this.createUser.bind(this)
-  }
-
-  public async getUserInfo (event: IApiGatewayProxyEvent): Promise<Record<string, any> | undefined> {
-    const { userId } = event.pathParameters ?? {}
-    return this.userModel.getOne({ id: userId }).then(({ Item }) => {
-      if (Item == null) {
-        throw new NotFoundException()
-      }
-      return Item
-    })
-  }
-
-  public async createUser (event: IApiGatewayProxyEvent): Promise<Record<string, any>> {
-    const { name } = event.body ?? {}
-    const user = {
-      id: v4(),
-      name,
-      wallets: []
-    }
-    return this.userModel.create(user).then(() => (user))
-  }
+export const getUserInfo = async (event: IApiGatewayProxyEvent): Promise<User> => {
+  return UserModel.getById(event.pathParameters.userId)
 }
 
-export default UserFunctions
+export const createUser = async (event: IApiGatewayProxyEvent): Promise<User> => {
+  const user = new UserModel({ id: v4(), wallets: [], ...event.body })
+  return user.createUser()
+}

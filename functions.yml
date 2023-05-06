@@ -1,14 +1,49 @@
 createUser:
-  handler: src/index.createUser
+  handler: src/index.createUserHandler
   description: Create a new user
   events:
     - httpApi:
         method: POST
         path: /user
 getUserInfo:
-  handler: src/index.getUserInfo
+  handler: src/index.getUserInfoHandler
   description: Get user info
   events:
     - httpApi:
         method: GET
         path: /user/{userId}
+createWallet:
+  handler: src/index.createWalletHandler
+  description: Create new wallet for user
+  events:
+    - httpApi:
+        method: POST
+        path: /user/{userId}/wallet
+getAllWalletsFromUser:
+  handler: src/index.getAllWalletsFromUserHandler
+  description: Get all wallets from user
+  events:
+    - httpApi:
+        method: GET
+        path: /user/{userId}/wallet
+getWalletInfo:
+  handler: src/index.getWalletInfoHandler
+  description: Get wallet info
+  events:
+    - httpApi:
+        method: GET
+        path: /user/{userId}/wallet/{walletId}
+configureWalletLimits:
+  handler: src/index.configureWalletLimitsHandler
+  description: Configure limit value for wallet
+  events:
+    - httpApi:
+        method: POST
+        path: /{userId}/wallet/{walletId}/limits
+buy:
+  handler: src/index.buyHandler
+  description: Make a purchase
+  events:
+    - httpApi:
+        method: POST
+        path: /{userId}/wallet/buy
