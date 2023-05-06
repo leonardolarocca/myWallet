@@ -25,6 +25,12 @@
       ],
       "@repositories/*": [
         "src/repositories/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@services/*": [
+        "src/services/*"
       ]
     }
   }

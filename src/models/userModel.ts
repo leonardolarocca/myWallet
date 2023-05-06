@@ -12,7 +12,7 @@ class UserModel {
     this.user = user
   }
 
-  public async createUser (): Promise<User> {
+  public async save (): Promise<User> {
     return dynamoClient.send(new PutCommand({
       TableName: `${process.env.DYNAMODB_TABLE_PREFIX}-users`,
       Item: this.user
@@ -20,7 +20,6 @@ class UserModel {
   }
 
   public static async getById (id: string): Promise<User> {
-    const wallets = (await WalletModel.getByUserId(id)).map(wallet => wallet.id)
     const user = await dynamoClient.send(new GetCommand({
       TableName: `${process.env.DYNAMODB_TABLE_PREFIX}-users`,
       Key: { id }
@@ -30,6 +29,7 @@ class UserModel {
       throw new NotFoundException('User not found')
     }
 
+    const wallets = (await WalletModel.getByUserId(id)).map(wallet => wallet.id)
     return { ...user, wallets }
   }
 }
