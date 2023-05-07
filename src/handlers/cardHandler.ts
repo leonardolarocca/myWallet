@@ -7,7 +7,7 @@ import { type APIGatewayProxyResult } from 'aws-lambda'
 
 import { type RemoveCard, type AddCard, type GetCard } from '../types/cardEventTypes'
 
-export const getCards = async (event: GetCard): Promise<Card[]> => {
+export const getCards = async (event: GetCard): Promise<APIGatewayProxyResult> => {
   const [wallet] = await new WalletRepository().getWalletByIdAndUserId(
     event.pathParameters.walletId,
     event.pathParameters.userId
@@ -17,12 +17,17 @@ export const getCards = async (event: GetCard): Promise<Card[]> => {
     throw new NotFoundException(`Cards not found for this wallet: ${wallet.id}`)
   }
 
-  return Promise.all(
+  const cards = await Promise.all(
     wallet.cards?.map(async card => new CardRepository().getOne(card))
   )
+
+  return {
+    body: JSON.stringify(cards),
+    statusCode: 200
+  }
 }
 
-export const getCard = async (event: GetCard): Promise<Card> => {
+export const getCard = async (event: GetCard): Promise<APIGatewayProxyResult> => {
   const [wallet] = await new WalletRepository().getWalletByIdAndUserId(
     event.pathParameters.walletId,
     event.pathParameters.userId
@@ -42,10 +47,13 @@ export const getCard = async (event: GetCard): Promise<Card> => {
   card.totalAmount = card.purchases?.reduce((sum, currentValue) => sum + currentValue, 0)
   delete card.purchases
 
-  return card
+  return {
+    body: JSON.stringify(card),
+    statusCode: 200
+  }
 }
 
-export const addCard = async (event: AddCard): Promise<Card> => {
+export const addCard = async (event: AddCard): Promise<APIGatewayProxyResult> => {
   const [wallet] = await new WalletRepository().getWalletByIdAndUserId(
     event.pathParameters.walletId,
     event.pathParameters.userId
@@ -73,10 +81,15 @@ export const addCard = async (event: AddCard): Promise<Card> => {
   wallet.maxLimit += card.limit
   wallet.avaliableAmount += card.limit
 
-  return new CardRepository().save(card).then(async (data) => {
+  const createdCard = await new CardRepository().save(card).then(async (data) => {
     await new WalletRepository().save(wallet)
     return data
   })
+
+  return {
+    body: JSON.stringify(createdCard),
+    statusCode: 200
+  }
 }
 
 export const removeCard = async (event: RemoveCard): Promise<APIGatewayProxyResult> => {
