@@ -1,0 +1,22 @@
+name: aws
+stage: ${opt:stage, 'dev'}
+region: us-east-1
+profile: "myProfile"
+runtime: nodejs16.x
+memorySize: 128
+timeout: 30
+environment:
+  DYNAMODB_TABLE_PREFIX: my-wallet-db
+httpApi:
+  cors: true
+iam:
+  role:
+    statements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+          - dynamodb:Scan
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+        Resource: "arn:aws:dynamodb:${aws:region}:*:table/${self:provider.environment.DYNAMODB_TABLE_PREFIX}*"

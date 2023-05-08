@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@clients/*": [
+        "src/clients/*"
+      ],
+      "@exceptions/*": [
+        "src/exceptions/*"
+      ],
+      "@handlers/*": [
+        "src/handlers/*"
+      ],
+      "@interfaces/*": [
+        "src/interfaces/*"
+      ],
+      "@middlewares/*": [
+        "src/middlewares/*"
+      ],
+      "@repositories/*": [
+        "src/repositories/*"
+      ],
+      "@schemas/*": [
+        "src/schemas/*"
+      ],
+      "@services/*": [
+        "src/services/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@seeds/*": [
+        "tests/seeds/*"
+      ]
+    }
+  }
+}

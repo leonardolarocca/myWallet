@@ -1,0 +1,84 @@
+createUser:
+  handler: src/index.createUserHandler
+  description: Create a new user
+  events:
+    - httpApi:
+        method: POST
+        path: /user
+getUserInfo:
+  handler: src/index.getUserHandler
+  description: Get user info
+  events:
+    - httpApi:
+        method: GET
+        path: /user/{userId}
+createWallet:
+  handler: src/index.createWalletHandler
+  description: Create new wallet for user
+  events:
+    - httpApi:
+        method: POST
+        path: /user/{userId}/wallet
+getAllWalletsFromUser:
+  handler: src/index.getAllWalletsFromUserHandler
+  description: Get all wallets from user
+  events:
+    - httpApi:
+        method: GET
+        path: /user/{userId}/wallet
+getWalletInfo:
+  handler: src/index.getWalletByIdAndUserIdHandler
+  description: Get wallet info
+  events:
+    - httpApi:
+        method: GET
+        path: /user/{userId}/wallet/{walletId}
+configureWalletLimits:
+  handler: src/index.setWalletLimitHandler
+  description: Configure limit value for wallet
+  events:
+    - httpApi:
+        method: POST
+        path: /user/{userId}/wallet/{walletId}/limit
+purchase:
+  handler: src/index.purchaseHandler
+  description: Make a purchase
+  events:
+    - httpApi:
+        method: POST
+        path: /user/{userId}/wallet/{walletId}/purchase
+addCard:
+  handler: src/index.addCardHandler
+  description: Add one card on wallet
+  events:
+    - httpApi:
+        method: POST
+        path: /user/{userId}/wallet/{walletId}/card
+getCards:
+  handler: src/index.getCardsHandler
+  description: Get all cards from wallet
+  events:
+    - httpApi:
+        method: GET
+        path: /user/{userId}/wallet/{walletId}/card
+getCard:
+  handler: src/index.getCardHandler
+  description: Get one card from wallet
+  events:
+    - httpApi:
+        method: GET
+        path: /user/{userId}/wallet/{walletId}/card/{cardNumber}
+removeCard:
+  handler: src/index.removeCardHandler
+  description: Delete one card from wallet
+  events:
+    - httpApi:
+        method: DELETE
+        path: /user/{userId}/wallet/{walletId}/card/{cardNumber}
+payCard:
+  handler: src/index.payCardDebitsHandler
+  description: Pay a value in one card
+  events:
+    - httpApi:
+        method: POST
+        path: /user/{userId}/wallet/{walletId}/card/{cardNumber}/payCard
