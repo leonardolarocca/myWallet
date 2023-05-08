@@ -10,8 +10,6 @@ class WalletRepository extends BaseRepository<Wallet> {
   }
 
   public async getWalletByIdAndUserId (walletId: string, userId: string): Promise<Wallet[]> {
-    console.log('getWalletByIdAndUserId')
-    console.log(walletId, userId)
     return dynamoClient.send(new QueryCommand({
       TableName: this.tableName,
       IndexName: 'userId-index',

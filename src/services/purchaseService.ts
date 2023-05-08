@@ -17,6 +17,7 @@ export const purchaseService = async (event: PurchaseEvent): Promise<IPurchase> 
 
   for (const card of cards) {
     card.avaliableLimit = getAvaliableLimit(card)
+
     const cardAmount = Math.min(purchaseAmount, card.avaliableLimit)
 
     if (cardAmount) {
@@ -48,6 +49,6 @@ export const purchaseService = async (event: PurchaseEvent): Promise<IPurchase> 
     maxLimit: wallet.maxLimit,
     clientLimit: wallet.clientLimit,
     usedAmount,
-    avaliabeAmount: wallet.avaliableAmount
+    avaliableAmount: wallet.avaliableAmount
   }
 }

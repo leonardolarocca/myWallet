@@ -6,8 +6,10 @@
     "expirationMonth": 7,
     "expirationYear": 2025,
     "cvv": "889",
-    "limit": 1000,
-    "purchases": [],
+    "limit": 900,
+    "purchases": [
+      100
+    ],
     "totalAmount": 0
   },
   {
