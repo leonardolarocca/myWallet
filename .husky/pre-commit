@@ -3,4 +3,6 @@
 
 echo 'Running lint-staged'
 npx lint-staged
-npx run test
+
+echo 'Running tests'
+npm run test
