@@ -40,13 +40,13 @@ configureWalletLimits:
     - httpApi:
         method: POST
         path: /user/{userId}/wallet/{walletId}/limit
-buy:
+purchase:
   handler: src/index.purchaseHandler
   description: Make a purchase
   events:
     - httpApi:
         method: POST
-        path: /user/{userId}/wallet/{walletId}/buy
+        path: /user/{userId}/wallet/{walletId}/purchase
 addCard:
   handler: src/index.addCardHandler
   description: Add one card on wallet
@@ -75,10 +75,10 @@ removeCard:
     - httpApi:
         method: DELETE
         path: /user/{userId}/wallet/{walletId}/card/{cardNumber}
-payDebit:
+payCard:
   handler: src/index.payCardDebitsHandler
   description: Pay a value in one card
   events:
     - httpApi:
         method: POST
-        path: /user/{userId}/wallet/{walletId}/card/{cardNumber}/pay
+        path: /user/{userId}/wallet/{walletId}/card/{cardNumber}/payCard

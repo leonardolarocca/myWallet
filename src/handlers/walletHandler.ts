@@ -16,9 +16,9 @@ export const getAllWalletsFromUser = async (event: GetWallet): Promise<APIGatewa
     throw new NotFoundException('Wallet(s) not found for this user')
   }
 
-  if (wallets[0].cards?.length) {
-    wallets[0].used = await getTotalPurchases(wallets[0].cards) ?? 0
-  }
+  wallets[0].used = wallets[0].cards?.length
+    ? await getTotalPurchases(wallets[0].cards) ?? 0
+    : 0
 
   return {
     body: JSON.stringify(wallets),
@@ -36,9 +36,9 @@ export const getWalletByIdAndUserId = async (event: GetWallet): Promise<APIGatew
     throw new NotFoundException('Wallet not found')
   }
 
-  if (wallets[0].cards?.length) {
-    wallets[0].used = await getTotalPurchases(wallets[0].cards) ?? 0
-  }
+  wallets[0].used = wallets[0].cards?.length
+    ? await getTotalPurchases(wallets[0].cards) ?? 0
+    : 0
 
   return {
     body: JSON.stringify(wallets[0]),

@@ -1,0 +1,382 @@
+{
+	"info": {
+		"_postman_id": "35046d2e-f145-4401-82bb-d252246b2379",
+		"name": "myWallet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1396429"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create a new User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody);",
+									"",
+									"pm.environment.set('userId', response.id)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user"
+							]
+						},
+						"description": "Cria um novo usuário."
+					},
+					"response": []
+				},
+				{
+					"name": "Get User info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/{{userId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"{{userId}}"
+							]
+						},
+						"description": "Obtem informação de um usuário."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Wallet",
+			"item": [
+				{
+					"name": "Create a new Wallet for User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody)",
+									"",
+									"pm.environment.set('walletId', response.id)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/{{userId}}/wallet",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"{{userId}}",
+								"wallet"
+							]
+						},
+						"description": "Cria uma nova carteira para o Usuário."
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Wallets from User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = JSON.parse(responseBody)",
+									"",
+									"pm.environment.set('walletId', response[0].id)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/{{userId}}/wallet",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"{{userId}}",
+								"wallet"
+							]
+						},
+						"description": "Consulta todas as carteiras do Usuário."
+					},
+					"response": []
+				},
+				{
+					"name": "Get one Wallet info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/{{userId}}/wallet/{{walletId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"{{userId}}",
+								"wallet",
+								"{{walletId}}"
+							]
+						},
+						"description": "Obtem informações de uma carteira do usuário"
+					},
+					"response": []
+				},
+				{
+					"name": "Configure Wallet Limits",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"limitAmount\": 700\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/{{userId}}/wallet/{{walletId}}/limit",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"{{userId}}",
+								"wallet",
+								"{{walletId}}",
+								"limit"
+							]
+						},
+						"description": "Configura limites para a carteira"
+					},
+					"response": []
+				},
+				{
+					"name": "Make a purchase",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/{{userId}}/wallet/{{walletId}}/purchase",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"{{userId}}",
+								"wallet",
+								"{{walletId}}",
+								"purchase"
+							]
+						},
+						"description": "Faz uma compra utilizando a carteira."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cards",
+			"item": [
+				{
+					"name": "Show all Cards on Wallet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/{{userId}}/wallet/{{walletId}}/card",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"{{userId}}",
+								"wallet",
+								"{{walletId}}",
+								"card"
+							]
+						},
+						"description": "Mostra todos os cartões da carteira."
+					},
+					"response": []
+				},
+				{
+					"name": "Show one card info on Wallet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/{{userId}}/wallet/{{walletId}}/card/cardNumber",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"{{userId}}",
+								"wallet",
+								"{{walletId}}",
+								"card",
+								"cardNumber"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a Card to the Wallet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"number\": \"0000000000000001\",\n    \"cardholder\": \"John Doe\",\n    \"dueDate\": 20,\n    \"expirationMonth\": 7,\n    \"expirationYear\": 2027,\n    \"cvv\": \"023\",\n    \"limit\": 1000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/{{userId}}/wallet/{{walletId}}/card",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"{{userId}}",
+								"wallet",
+								"{{walletId}}",
+								"card"
+							]
+						},
+						"description": "Cria/Adiciona um novo cartão para a carteira."
+					},
+					"response": []
+				},
+				{
+					"name": "Remove a Card from the Wallet",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/{{userId}}/wallet/{{walletId}}/card/cardNumber",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"{{userId}}",
+								"wallet",
+								"{{walletId}}",
+								"card",
+								"cardNumber"
+							]
+						},
+						"description": "Remove um cartão da carteira."
+					},
+					"response": []
+				},
+				{
+					"name": "Make a Card Payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/{{userId}}/wallet/{{walletId}}/card/cardNumber/payCard",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"{{userId}}",
+								"wallet",
+								"{{walletId}}",
+								"card",
+								"cardNumber",
+								"payCard"
+							]
+						},
+						"description": "Faz o pagamento de um cartão."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

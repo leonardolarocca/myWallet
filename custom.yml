@@ -11,9 +11,9 @@ dynamodb:
   # seed:
   #   test:
   #     sources:
-  #       - table: ${env:DYNAMODB_TABLE_PREFIX}-users
+  #       - table: ${self:provider.environment.DYNAMODB_TABLE_PREFIX}-users
   #         sources: [./tests/seeds/users.json]
-  #       - table: ${env:DYNAMODB_TABLE_PREFIX}-wallets
+  #       - table: ${self:provider.environment.DYNAMODB_TABLE_PREFIX}-wallets
   #         sources: [./tests/seeds/wallets.json]
-  #       - table: ${env:DYNAMODB_TABLE_PREFIX}-cards
+  #       - table: ${self:provider.environment.DYNAMODB_TABLE_PREFIX}-cards
   #         sources: [./tests/seeds/cards.json]

@@ -109,6 +109,8 @@ export const removeCard = async (event: RemoveCard): Promise<APIGatewayProxyResu
   event.wallet.clientLimit = Math.min(newMaxLimitClient, event.wallet.clientLimit ?? 0)
 
   event.wallet.maxLimit -= event.card.limit
+  const cardSum = event.card.purchases?.reduce((sum, currentValue) => sum + currentValue, 0)
+  event.wallet.used -= cardSum ?? 0
 
   if (!event.wallet.clientLimit) {
     delete event.wallet.clientLimit

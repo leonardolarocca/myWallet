@@ -7,7 +7,9 @@
   "version": "1.0.0",
   "scripts": {
     "test": "vitest",
-    "start-local": "sls offline start --reloadHandler --stage dev"
+    "start-local": "sls offline start",
+    "deploy-acceptance": "sls deploy --stage acp",
+    "deploy-production": "sls deploy --stage prd"
   },
   "engines": {
     "node": ">=16.17.1"
@@ -22,6 +24,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "dynamodb-localhost": "https://github.com/99x/dynamodb-localhost.git#master",
     "@commitlint/cli": "^17.6.1",
     "@commitlint/config-conventional": "^17.6.1",
     "@serverless/typescript": "^3.0.0",
