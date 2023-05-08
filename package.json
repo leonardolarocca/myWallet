@@ -6,7 +6,7 @@
   "license": "MIT",
   "version": "1.0.0",
   "scripts": {
-    "test": "vitest",
+    "test": "vitest run",
     "start-local": "sls offline start",
     "deploy-acceptance": "sls deploy --stage acp",
     "deploy-production": "sls deploy --stage prd"

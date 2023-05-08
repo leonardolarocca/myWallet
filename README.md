@@ -33,8 +33,9 @@ Para executar o deploy: `npm run deploy-<stage>`
 ## Desenvolvimento
 
 * Serverless Framework
-* Typescript
+* Typescript & Standard Style
 * Middy
 * DynamoDb
 * Eslint
 * Vitest
+* LintStaged & CommitLint & Commitizen & Husky
