@@ -38,4 +38,4 @@ Para executar o deploy: `npm run deploy-<stage>`
 * DynamoDb
 * Eslint
 * Vitest
-* LintStaged & CommitLint & Commitizen & Husky
+* Lint Staged & CommitLint & Commitizen & Husky
