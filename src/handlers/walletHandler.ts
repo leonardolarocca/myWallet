@@ -1,6 +1,7 @@
 import NotFoundException from '@exceptions/notFoundException'
 import UserRepository from '@repositories/userRepository'
 import WalletRepository from '@repositories/walletRepository'
+import { getTotalPurchases } from '@utils/cardUtils'
 import { type APIGatewayProxyResult } from 'aws-lambda'
 import { v4 } from 'uuid'
 
@@ -15,6 +16,10 @@ export const getAllWalletsFromUser = async (event: GetWallet): Promise<APIGatewa
     throw new NotFoundException('Wallet(s) not found for this user')
   }
 
+  if (wallets[0].cards?.length) {
+    wallets[0].used = await getTotalPurchases(wallets[0].cards) ?? 0
+  }
+
   return {
     body: JSON.stringify(wallets),
     statusCode: 200
@@ -22,17 +27,21 @@ export const getAllWalletsFromUser = async (event: GetWallet): Promise<APIGatewa
 }
 
 export const getWalletByIdAndUserId = async (event: GetWallet): Promise<APIGatewayProxyResult> => {
-  const wallet = await new WalletRepository().getWalletByIdAndUserId(
+  const wallets = await new WalletRepository().getWalletByIdAndUserId(
     event.pathParameters.walletId,
     event.pathParameters.userId
   )
 
-  if (!wallet.length) {
+  if (!wallets.length) {
     throw new NotFoundException('Wallet not found')
   }
 
+  if (wallets[0].cards?.length) {
+    wallets[0].used = await getTotalPurchases(wallets[0].cards) ?? 0
+  }
+
   return {
-    body: JSON.stringify(wallet),
+    body: JSON.stringify(wallets[0]),
     statusCode: 200
   }
 }
@@ -47,8 +56,6 @@ export const createWallet = async (event: CreateWallet): Promise<APIGatewayProxy
   const createdWallet = await new WalletRepository().save({
     id: v4(),
     userId: event.pathParameters.userId,
-    avaliableAmount: 0,
-    usedAmount: 0,
     maxLimit: 0,
     cards: []
   })

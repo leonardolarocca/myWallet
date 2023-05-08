@@ -85,8 +85,6 @@ export const addCard = async (event: AddCard): Promise<APIGatewayProxyResult> =>
     totalAmount: 0
   }
 
-  // TODO: validar se o cartao ja foi cadastrado em outra carteira
-
   if (wallets[0].cards?.includes(card.number)) {
     throw new ConflictException('Card already exists on wallet')
   }
@@ -94,7 +92,6 @@ export const addCard = async (event: AddCard): Promise<APIGatewayProxyResult> =>
   wallets[0].cards?.push(card.number)
   wallets[0].cards = [...new Set(wallets[0].cards)]
   wallets[0].maxLimit += card.limit
-  wallets[0].avaliableAmount += card.limit
 
   const createdCard = await new CardRepository().save(card).then(async (data) => {
     await new WalletRepository().save(wallets[0])
@@ -112,7 +109,6 @@ export const removeCard = async (event: RemoveCard): Promise<APIGatewayProxyResu
   event.wallet.clientLimit = Math.min(newMaxLimitClient, event.wallet.clientLimit ?? 0)
 
   event.wallet.maxLimit -= event.card.limit
-  event.wallet.avaliableAmount -= event.card.limit
 
   if (!event.wallet.clientLimit) {
     delete event.wallet.clientLimit

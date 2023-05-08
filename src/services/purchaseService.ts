@@ -39,16 +39,13 @@ export const purchaseService = async (event: PurchaseEvent): Promise<IPurchase> 
 
   await Promise.all(cards.map(async card => new CardRepository().save(card)))
 
-  const usedAmount = Number((totalPurchases + amount).toFixed(2))
-  wallet.avaliableAmount = Number((wallet.maxLimit - usedAmount).toFixed(2))
-  wallet.usedAmount = usedAmount
+  const used = Number((totalPurchases + amount).toFixed(2))
 
   await new WalletRepository().save(wallet)
 
   return {
     maxLimit: wallet.maxLimit,
     clientLimit: wallet.clientLimit,
-    usedAmount,
-    avaliableAmount: wallet.avaliableAmount
+    used
   }
 }

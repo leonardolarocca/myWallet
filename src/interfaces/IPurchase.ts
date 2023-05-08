@@ -1,8 +1,7 @@
 interface IPurchase {
   maxLimit: number
   clientLimit: number
-  usedAmount: number
-  avaliableAmount: number
+  used: number
 }
 
 export default IPurchase

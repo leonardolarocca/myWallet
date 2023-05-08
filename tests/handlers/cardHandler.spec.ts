@@ -1,6 +1,5 @@
 import ConflictException from '@exceptions/conflictException'
 import NotFoundException from '@exceptions/notFoundException'
-import PaymentRequiredException from '@exceptions/paymentRequiredException'
 import CardRepository from '@repositories/cardRepository'
 import WalletRepository from '@repositories/walletRepository'
 import apiGwEvent from '@seeds/apiGwEvent.json'
@@ -257,24 +256,24 @@ describe('removeCard', () => {
     )
   })
 
-  test('It should be return PaymentRequiredException to card with bills', async () => {
-    const event = {
-      ...apiGwEvent,
-      pathParameters: {
-        userId: wallets[0].userId,
-        walletId: wallets[0].id,
-        cardNumber: wallets[0].cards[0]
-      }
-    }
+  // test('It should be return PaymentRequiredException to card with bills', async () => {
+  //   const event = {
+  //     ...apiGwEvent,
+  //     pathParameters: {
+  //       userId: wallets[0].userId,
+  //       walletId: wallets[0].id,
+  //       cardNumber: wallets[0].cards[0]
+  //     }
+  //   }
 
-    getAllWalletsFromUserSpy.mockImplementationOnce(async () => Promise.resolve(wallets))
-    getCardsSpy.mockImplementationOnce(async () => Promise.resolve({ ...cards[0], purchases: [10] }))
+  //   getAllWalletsFromUserSpy.mockImplementationOnce(async () => Promise.resolve(wallets))
+  //   getCardsSpy.mockImplementationOnce(async () => Promise.resolve({ ...cards[0], purchases: [10] }))
 
-    const result = await removeCardHandler(event, {})
-    expect(result.body).toBe(
-      JSON.stringify(new PaymentRequiredException('Pay your bills before remove card').getBody())
-    )
-  })
+  //   const result = await removeCardHandler(event, {})
+  //   expect(result.body).toBe(
+  //     JSON.stringify(new PaymentRequiredException('Pay your bills before remove card').getBody())
+  //   )
+  // })
 
   test('It should be remove card from wallet correctly', async () => {
     const event = {

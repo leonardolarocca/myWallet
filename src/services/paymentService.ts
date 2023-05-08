@@ -17,8 +17,6 @@ export const payCardDebitsService = async (event: PayCardEvent): Promise<any> =>
       event.pathParameters.userId
     )
 
-    wallets[0].avaliableAmount += amount
-    wallets[0].usedAmount -= amount
     await new WalletRepository().save(wallets[0])
 
     return { wallet: { ...wallets[0] }, card }

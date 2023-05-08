@@ -86,8 +86,7 @@ describe('purchaseHandler', () => {
     const mockWalletResponse = {
       maxLimit: wallets[0].maxLimit,
       clientLimit: wallets[0].clientLimit,
-      usedAmount: 110,
-      avaliableAmount: 6890
+      used: 110
     }
 
     vi.spyOn(WalletRepository.prototype, 'save')

@@ -124,6 +124,9 @@ describe('setWalletLimit', () => {
       .mockImplementationOnce(async () => Promise.resolve(cards[0]))
       .mockImplementationOnce(async () => Promise.resolve(cards[1]))
       .mockImplementationOnce(async () => Promise.resolve(cards[2]))
+      .mockImplementationOnce(async () => Promise.resolve(cards[0]))
+      .mockImplementationOnce(async () => Promise.resolve(cards[1]))
+      .mockImplementationOnce(async () => Promise.resolve(cards[2]))
 
     vi.spyOn(WalletRepository.prototype, 'save').mockImplementation(async () => Promise.resolve(wallets[0]))
 

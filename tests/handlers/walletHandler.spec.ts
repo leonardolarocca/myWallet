@@ -1,7 +1,9 @@
 import NotFoundException from '@exceptions/notFoundException'
 import BaseRepository from '@repositories/baseRepository'
+import CardRepository from '@repositories/cardRepository'
 import WalletRepository from '@repositories/walletRepository'
 import apiGwEvent from '@seeds/apiGwEvent.json'
+import cards from '@seeds/cards.json'
 import users from '@seeds/users.json'
 import wallets from '@seeds/wallets.json'
 import { getAllWalletsFromUserHandler, getWalletByIdAndUserIdHandler, createWalletHandler } from 'src'
@@ -22,6 +24,11 @@ describe('getWalletsByUserId', () => {
 
     getAllWalletsFromUserSpy = vi.spyOn(WalletRepository.prototype, 'getAllWalletsFromUserId')
       .mockImplementationOnce(async () => Promise.resolve(wallets))
+
+    vi.spyOn(CardRepository.prototype, 'getOne')
+      .mockImplementationOnce(async () => Promise.resolve(cards[0]))
+      .mockImplementationOnce(async () => Promise.resolve(cards[1]))
+      .mockImplementationOnce(async () => Promise.resolve(cards[2]))
 
     const response = await getAllWalletsFromUserHandler(event, {})
     expect(response.statusCode).toBe(200)
@@ -59,9 +66,14 @@ describe('getWalletByIdAndUserId', () => {
     getWalletByIdAndUserSpy = vi.spyOn(WalletRepository.prototype, 'getWalletByIdAndUserId')
       .mockImplementationOnce(async () => Promise.resolve(wallets))
 
+    vi.spyOn(CardRepository.prototype, 'getOne')
+      .mockImplementationOnce(async () => Promise.resolve(cards[0]))
+      .mockImplementationOnce(async () => Promise.resolve(cards[1]))
+      .mockImplementationOnce(async () => Promise.resolve(cards[2]))
+
     const response = await getWalletByIdAndUserIdHandler(event, {})
     expect(response.statusCode).toBe(200)
-    expect(response.body).toBe(JSON.stringify(wallets))
+    expect(response.body).toBe(JSON.stringify(wallets[0]))
   })
 
   test('It should be throw 404 NotFoundException to get one wallet with wrong id', async () => {

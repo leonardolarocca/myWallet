@@ -5,8 +5,7 @@ export const walletSchema = z.object({
   userId: z.string(),
   maxLimit: z.number().min(0),
   clientLimit: z.number().min(0).optional(),
-  avaliableAmount: z.number().min(0),
-  usedAmount: z.number().min(0),
+  used: z.number().min(0).optional(),
   cards: z.array(z.string()).optional()
 })
 
