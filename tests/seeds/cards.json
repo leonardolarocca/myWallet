@@ -1,0 +1,37 @@
+[
+  {
+    "number": "0000000000000001",
+    "cardholder": "John Doe",
+    "dueDate": 20,
+    "expirationMonth": 7,
+    "expirationYear": 2025,
+    "cvv": "889",
+    "limit": 900,
+    "purchases": [
+      100
+    ],
+    "totalAmount": 0
+  },
+  {
+    "number": "0000000000000002",
+    "cardholder": "John Doe",
+    "dueDate": 10,
+    "expirationMonth": 9,
+    "expirationYear": 2027,
+    "cvv": "023",
+    "limit": 5000,
+    "purchases": [],
+    "totalAmount": 0
+  },
+  {
+    "number": "0000000000000003",
+    "cardholder": "John Doe",
+    "dueDate": 10,
+    "expirationMonth": 2,
+    "expirationYear": 2024,
+    "cvv": "541",
+    "limit": 1000,
+    "purchases": [],
+    "totalAmount": 0
+  }
+]

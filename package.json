@@ -6,6 +6,7 @@
   "license": "MIT",
   "version": "1.0.0",
   "scripts": {
+    "test": "vitest",
     "start-local": "sls offline start --reloadHandler --stage dev"
   },
   "engines": {
@@ -47,7 +48,9 @@
     "serverless-offline": "^12.0.4",
     "tsconfig-paths": "^3.9.0",
     "tsx": "^3.12.6",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^0.31.0"
   },
   "config": {
     "commitizen": {

@@ -2,11 +2,11 @@ import CardRepository from '@repositories/cardRepository'
 import { type Card } from '@schemas/cardSchema'
 
 export const getSortedCards = async (cardIds: string[]): Promise<Card[]> => {
-  const cards = []
+  const cards: Card[] = []
 
-  for await (const card of cardIds) {
-    cards.push(await new CardRepository().getOne(card))
-  }
+  await Promise.all(
+    cardIds.map(async card => cards.push(await new CardRepository().getOne(card)))
+  )
 
   sortCards(cards)
 

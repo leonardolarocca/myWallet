@@ -8,17 +8,21 @@ import { type APIGatewayProxyResult } from 'aws-lambda'
 import { type RemoveCard, type AddCard, type GetCard } from '../types/cardEventTypes'
 
 export const getCards = async (event: GetCard): Promise<APIGatewayProxyResult> => {
-  const [wallet] = await new WalletRepository().getWalletByIdAndUserId(
+  const wallets = await new WalletRepository().getWalletByIdAndUserId(
     event.pathParameters.walletId,
     event.pathParameters.userId
   )
 
-  if (!wallet.cards?.length) {
-    throw new NotFoundException(`Cards not found for this wallet: ${wallet.id}`)
+  if (!wallets.length) {
+    throw new NotFoundException('Wallet not found')
+  }
+
+  if (!wallets[0].cards?.length) {
+    throw new NotFoundException(`Cards not found for this wallet: ${wallets[0].id}`)
   }
 
   const cards = await Promise.all(
-    wallet.cards?.map(async card => new CardRepository().getOne(card))
+    wallets[0].cards?.map(async card => new CardRepository().getOne(card))
   )
 
   return {
@@ -28,17 +32,22 @@ export const getCards = async (event: GetCard): Promise<APIGatewayProxyResult> =
 }
 
 export const getCard = async (event: GetCard): Promise<APIGatewayProxyResult> => {
-  const [wallet] = await new WalletRepository().getWalletByIdAndUserId(
+  const wallets = await new WalletRepository().getWalletByIdAndUserId(
     event.pathParameters.walletId,
     event.pathParameters.userId
   )
 
-  if (!wallet.cards?.length) {
-    throw new NotFoundException(`Cards not found for this wallet: ${wallet.id}`)
+  if (!wallets.length) {
+    throw new NotFoundException('Wallet not found')
   }
+
+  if (!wallets[0].cards?.length) {
+    throw new NotFoundException(`Card not found for this wallet: ${wallets[0].id}`)
+  }
+
   const { cardNumber } = event.pathParameters
 
-  if (!wallet.cards.includes(cardNumber)) {
+  if (!wallets[0].cards.includes(cardNumber)) {
     throw new NotFoundException(`Card ${cardNumber} not found at wallet`)
   }
 
@@ -54,10 +63,14 @@ export const getCard = async (event: GetCard): Promise<APIGatewayProxyResult> =>
 }
 
 export const addCard = async (event: AddCard): Promise<APIGatewayProxyResult> => {
-  const [wallet] = await new WalletRepository().getWalletByIdAndUserId(
+  const wallets = await new WalletRepository().getWalletByIdAndUserId(
     event.pathParameters.walletId,
     event.pathParameters.userId
   )
+
+  if (!wallets.length) {
+    throw new NotFoundException('Wallet not found')
+  }
 
   const card: Card = {
     number: event.body.number,
@@ -72,17 +85,16 @@ export const addCard = async (event: AddCard): Promise<APIGatewayProxyResult> =>
     totalAmount: 0
   }
 
-  if (wallet.cards?.includes(card.number)) {
+  if (wallets[0].cards?.includes(card.number)) {
     throw new ConflictException('Card already exists on wallet')
   }
 
-  wallet.cards?.push(card.number)
-  wallet.cards = [...new Set(wallet.cards)]
-  wallet.maxLimit += card.limit
-  wallet.avaliableAmount += card.limit
+  wallets[0].cards?.push(card.number)
+  wallets[0].cards = [...new Set(wallets[0].cards)]
+  wallets[0].maxLimit += card.limit
 
   const createdCard = await new CardRepository().save(card).then(async (data) => {
-    await new WalletRepository().save(wallet)
+    await new WalletRepository().save(wallets[0])
     return data
   })
 
@@ -97,7 +109,6 @@ export const removeCard = async (event: RemoveCard): Promise<APIGatewayProxyResu
   event.wallet.clientLimit = Math.min(newMaxLimitClient, event.wallet.clientLimit ?? 0)
 
   event.wallet.maxLimit -= event.card.limit
-  event.wallet.avaliableAmount -= event.card.limit
 
   if (!event.wallet.clientLimit) {
     delete event.wallet.clientLimit
