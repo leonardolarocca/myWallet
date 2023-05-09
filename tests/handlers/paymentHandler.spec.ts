@@ -6,11 +6,7 @@ import apiGwEvent from '@seeds/apiGwEvent.json'
 import cards from '@seeds/cards.json'
 import wallets from '@seeds/wallets.json'
 import { payCardDebitsHandler } from 'src'
-import { describe, test, vi, expect, beforeAll } from 'vitest'
-
-beforeAll(() => {
-
-})
+import { describe, test, vi, expect } from 'vitest'
 
 describe('paymentHandler', () => {
   test('It should be throw NotFoundException to not found card', async () => {

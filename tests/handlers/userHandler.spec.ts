@@ -3,11 +3,7 @@ import BaseRepository from '@repositories/baseRepository'
 import apiGwEvent from '@seeds/apiGwEvent.json'
 import users from '@seeds/users.json'
 import { createUserHandler, getUserHandler } from 'src'
-import { describe, test, vi, expect, beforeAll } from 'vitest'
-
-beforeAll(() => {
-
-})
+import { describe, test, vi, expect } from 'vitest'
 
 describe('createUser', () => {
   test('It should create user correctly', async () => {
