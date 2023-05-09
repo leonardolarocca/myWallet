@@ -10,7 +10,6 @@ import { describe, vi, expect, test } from 'vitest'
 
 let getAllWalletsFromUserSpy
 let getCardsSpy
-let walletRepoSaveSpy
 
 describe('getCards', () => {
   test('It should be return all cards from wallet/user correctly', async () => {
@@ -143,7 +142,7 @@ describe('addCard', () => {
       body: cards[0]
     }
 
-    walletRepoSaveSpy = vi.spyOn(WalletRepository.prototype, 'save').mockImplementation(async () => Promise.resolve({
+    vi.spyOn(WalletRepository.prototype, 'save').mockImplementation(async () => Promise.resolve({
       ...wallets[0],
       cards: ['0000000000000001']
     }))
