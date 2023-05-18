@@ -1,6 +1,6 @@
 import CardRepository from '@repositories/cardRepository'
 import WalletRepository from '@repositories/walletRepository'
-import { getAvaliableLimit } from '@utils/cardUtils'
+import { getAvaliableLimit, getTotalPurchases } from '@utils/cardUtils'
 
 import { type PayCardEvent } from '../types/payCardEventType'
 
@@ -16,6 +16,8 @@ export const payCardDebitsService = async (event: PayCardEvent): Promise<any> =>
       event.pathParameters.walletId,
       event.pathParameters.userId
     )
+
+    wallets[0].used = await getTotalPurchases(wallets[0].cards ?? [])
 
     await new WalletRepository().save(wallets[0])
 
