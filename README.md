@@ -39,3 +39,5 @@ Para executar o deploy: `npm run deploy-<stage>`
 * Eslint
 * Vitest
 * Lint Staged & CommitLint & Commitizen & Husky
+
+> Antes de comitar, executar `npm run prepare`
